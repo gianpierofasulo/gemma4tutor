@@ -79,10 +79,10 @@ Dobbiamo scaricare i "cervelli" dell'applicazione all'interno del container di O
 
 ```bash
 # Modello per la visione (OCR)
-docker exec -it gemmaknow-ollama-1 ollama pull llava:7b
+docker exec -it gemma4tutor-ollama-1 ollama pull llava:7b
 
 # Modello per l'analisi linguistica (Gemma)
-docker exec -it gemmaknow-ollama-1 ollama pull gemma2:2b
+docker exec -it gemma4tutor-ollama-1 ollama pull gemma2:2b
 ```
 
 ---
