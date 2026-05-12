@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/var/www/html
+      # Persistenza per le foto caricate e i log di Laravel
+      - storage_data:/var/www/html/storage
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: polyglot_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+      # --- AGGIUNTO: Persistenza dei dati DB ---
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+volumes:
+  ollama_data:
+  storage_data:
+  mysql_data:
