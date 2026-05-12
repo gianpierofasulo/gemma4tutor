@@ -23,7 +23,7 @@ class ExerciseController extends Controller
         $imageData = base64_encode(Storage::disk('public')->get($path));
 
         // --- STEP 1: ESTRAZIONE TESTO CON LLAVA ---
-        $ocrResponse = Http::timeout(400)->post('http://ollama:11434/api/generate', [
+        $ocrResponse = Http::timeout(900)->post('http://ollama:11434/api/generate', [
             'model' => 'llava:7b',
             'prompt' => 'Agisci come un sistema OCR. TRASCRIVI esattamente tutto il testo che vedi nell\'immagine senza aggiungere commenti.',
             'images' => [$imageData],
@@ -51,7 +51,7 @@ class ExerciseController extends Controller
                         2. CORREZIONE: (scrivi la versione corretta nella lingua originale del testo)
                         3. SPIEGAZIONE: (spiega gli errori in italiano in modo semplice)";
 
-        $finalResponse = Http::timeout(320)->post('http://ollama:11434/api/generate', [
+        $finalResponse = Http::timeout(820)->post('http://ollama:11434/api/generate', [
             'model' => 'gemma2:2b',
             'prompt' => $promptGemma,
             'stream' => false,
