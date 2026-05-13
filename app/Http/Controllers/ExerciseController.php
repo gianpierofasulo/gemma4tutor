@@ -25,7 +25,7 @@ class ExerciseController extends Controller
         // --- STEP 1: ESTRAZIONE TESTO CON LLAVA ---
         $ocrResponse = Http::timeout(900)->post('http://ollama:11434/api/generate', [
             'model' => 'llava:7b',
-            'prompt' => 'Agisci come un sistema OCR. TRASCRIVI esattamente tutto il testo che vedi nell\'immagine senza aggiungere commenti.',
+            'prompt' => 'Agisci come un sistema OCR. TRASCRIVI esattamente tutto il testo che vedi nell\'immagine senza aggiungere commenti. Attento che il testo può essere scritto in diverse lingue ',
             'images' => [$imageData],
             'stream' => false,
         ]);
@@ -43,12 +43,12 @@ class ExerciseController extends Controller
 
         // --- STEP 2: ANALISI LINGUISTICA CON GEMMA 2 ---
         // Usiamo un prompt molto direttivo per l'italiano
-        $promptGemma = "ISTRUZIONI: Rispondi ESCLUSIVAMENTE in lingua italiana. Sei un tutor esperto.
+        $promptGemma = "ISTRUZIONI: Rispondi ESCLUSIVAMENTE in lingua italiana per la SPIEGAZIONE. Sei un tutor esperto.
                         Analizza il seguente testo estratto da un compito: '$rawText'.
                         Fornisci un feedback dettagliato evidenziando errori grammaticali, di sintassi, ortografia e suggerendo correzioni.
                         Segui questo schema per la risposta:
-                        1. TESTO RILEVATO: (traduci qui il testo che hai ricevuto inlingua italiana)
-                        2. CORREZIONE: (scrivi la versione corretta nella lingua originale del testo)
+                        1. TESTO RILEVATO: (traduci qui il testo che hai ricevuto e riscrivilo in lingua italiana)
+                        2. CORREZIONE: (scrivi la versione corretta nella lingua originale del testo che hai ricevuto)
                         3. SPIEGAZIONE: (spiega gli errori in italiano in modo semplice)";
 
         $finalResponse = Http::timeout(820)->post('http://ollama:11434/api/generate', [
