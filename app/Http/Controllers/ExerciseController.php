@@ -43,12 +43,15 @@ class ExerciseController extends Controller
 
         // --- STEP 2: ANALISI LINGUISTICA CON GEMMA 2 ---
         // Usiamo un prompt molto direttivo per l'italiano
-        $promptGemma = "ISTRUZIONI: Rispondi ESCLUSIVAMENTE in lingua italiana per la SPIEGAZIONE. Sei un tutor esperto.
-                        Analizza il seguente testo estratto da un compito: '$rawText'.
+        $promptGemma = "ISTRUZIONI: Sei un insegnate di lingua madre esperto in INGLESE, FRANCESE e TEDESCO.
+                        Analizza il seguente testo estratto: '$rawText'.
+                        Rispondi ESCLUSIVAMENTE in lingua italiana per la SPIEGAZIONE che vedi sotto al punto 3.
+                        La CORREZIONE deve essere nella lingua del testo che hai ricevuto quindi ad esempio se è in inglese il testo ,la correzione scrivila in inglese.
                         Fornisci un feedback dettagliato evidenziando errori grammaticali, di sintassi, ortografia e suggerendo correzioni.
                         Segui questo schema per la risposta:
-                        1. TESTO RILEVATO: (traduci qui il testo che hai ricevuto e riscrivilo in lingua italiana)
-                        2. CORREZIONE: (scrivi la versione corretta nella lingua originale del testo che hai ricevuto)
+                        1. TESTO RILEVATO: (traduci qui il testo che hai ricevuto e riscrivilo in
+                         lingua italiana)
+                        2. CORREZIONE: (scrivi la versione corretta nella lingua originale del testo che hai ricevuto ad esempio se è in inglese scrivi la correzione in inglese)
                         3. SPIEGAZIONE: (spiega gli errori in italiano in modo semplice)";
 
         $finalResponse = Http::timeout(820)->post('http://ollama:11434/api/generate', [
