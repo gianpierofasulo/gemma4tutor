@@ -127,7 +127,7 @@ Per evitare errori di scrittura dei log o della cache, esegui questi comandi per
 
 ```bash
 # Crea le sottocartelle necessarie
-docker-compose exec app mkdir -p storage/framework/{sessions,views,cache/data}
+docker-compose exec app bash -c "mkdir -p storage/framework/{sessions,views,cache/data}"
 
 # Assegna i permessi all'utente del server web (www-data)
 docker-compose exec app chown -R www-data:www-data storage bootstrap/cache
