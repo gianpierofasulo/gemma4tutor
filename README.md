@@ -127,7 +127,7 @@ Per evitare errori di scrittura dei log o della cache, esegui questi comandi per
 
 ```bash
 # Crea le sottocartelle necessarie
-docker-compose exec app mkdir -p storage/framework/{sessions,views,cache/data}
+docker-compose exec app bash -c "mkdir -p storage/framework/{sessions,views,cache/data}"
 
 # Assegna i permessi all'utente del server web (www-data)
 docker-compose exec app chown -R www-data:www-data storage bootstrap/cache
@@ -152,6 +152,15 @@ L'applicazione sarà raggiungibile su Windows all'indirizzo:
 👉 **http://localhost:8000**
 
 ---
+
+## Lanciare i container con file di configurazione personalizzato per usare HOllama chat
+```bash
+docker-compose -f docker-compose-Hollama.yml up -d
+```
+## Stoppare i container prima lanciati
+```bash
+docker-compose -f docker-compose-Hollama.yml down
+```
 
 ## 💡 Note Tecniche
 

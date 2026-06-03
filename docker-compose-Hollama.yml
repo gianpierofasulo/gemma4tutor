@@ -1,0 +1,50 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/var/www/html
+      # Persistenza per le foto caricate e i log di Laravel
+      - storage_data:/var/www/html/storage
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+      - open-webui
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: gemma4tutor-webui
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    restart: always
+    depends_on:
+      - ollama
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: polyglot_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+      # --- AGGIUNTO: Persistenza dei dati DB ---
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  ollama:
+    image: ollama/ollama
+    container_name: gemma4tutor-ollama-1
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:
+  storage_data:
+  mysql_data:
+  open-webui:
